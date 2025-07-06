@@ -56,7 +56,7 @@ const calculatePrice = (product, goldPrice) => {
     return Math.round(price * 100) / 100;
 }
 
-app.get('/api/products', async (req, res) => {
+app.get('/', async (req, res) => {
     try {
         const { minPrice, maxPrice, minPopularity, maxPopularity } = req.query;
         
