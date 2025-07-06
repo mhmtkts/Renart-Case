@@ -26,7 +26,7 @@ const getGoldPrice = async () => {
         
         if (!API_KEY) {
             console.error('API key bulunamadı');
-            return 65;
+            return 107;
         }
         
         const response = await fetch(`https://api.metals.dev/v1/metal/spot?api_key=${API_KEY}&metal=gold&currency=USD`);
@@ -42,12 +42,12 @@ const getGoldPrice = async () => {
             return Math.round(pricePerGram * 100) / 100;
         } else {
             console.error('API yanıtında fiyat bulunamadı');
-            return 65;
+            return 107;
         }
         
     } catch (error) {
         console.error('Altın fiyatı alınamadı:', error.message);
-        return 65;
+        return 107;
     }
 }
 
@@ -76,7 +76,6 @@ app.get('/', async (req, res) => {
             price: calculatePrice(product, goldPrice)
         }));
 
-        // Filtering logic
         if (minPrice) {
             productsWithPrice = productsWithPrice.filter(p => p.price >= parseFloat(minPrice));
         }
