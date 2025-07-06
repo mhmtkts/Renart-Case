@@ -3,7 +3,6 @@ const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
-const { count } = require('console');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -25,79 +24,90 @@ const getGoldPrice = async () => {
     try {
         const API_KEY = process.env.METALS_API_KEY;
         
-        console.log('API_KEY var mı?', !!API_KEY);
-        
         if (!API_KEY) {
-            console.log('API key bulunamadı, fallback değer döndürülüyor');
+            console.error('API key bulunamadı');
             return 65;
         }
         
         const response = await fetch(`https://api.metals.dev/v1/metal/spot?api_key=${API_KEY}&metal=gold&currency=USD`);
-        
-        console.log('Response status:', response.status);
-        console.log('Response ok:', response.ok);
         
         if (!response.ok) {
             throw new Error(`API Error: ${response.status}`);
         }
         
         const data = await response.json();
-        console.log('API yanıtı:', JSON.stringify(data, null, 2));
         
-        let goldPrice;
         if (data.rate && data.rate.price) {
-            goldPrice = data.rate.price;
-        } else if (data.price) {
-            goldPrice = data.price;
+            const pricePerGram = data.rate.price / 31.1035;
+            return Math.round(pricePerGram * 100) / 100;
         } else {
-            console.log('Fiyat bulunamadı, fallback değer kullanılıyor');
+            console.error('API yanıtında fiyat bulunamadı');
             return 65;
         }
         
-        const pricePerGram = goldPrice / 31.1035;
-        
-        console.log('Altın fiyatı (ons):', goldPrice);
-        console.log('Altın fiyatı (gram):', pricePerGram);
-        
-        return Math.round(pricePerGram * 100) / 100; // 2 ondalık basamak
-        
     } catch (error) {
         console.error('Altın fiyatı alınamadı:', error.message);
-        console.log('Fallback değer 65 döndürülüyor');
         return 65;
     }
 }
 
 const calculatePrice = (product, goldPrice) => {
-    const price = (product.popularityScore +1) * (product.weight * goldPrice);
+    const price = (product.popularityScore + 1) * (product.weight * goldPrice);
     return Math.round(price * 100) / 100;
-}    
+}
 
 app.get('/api/products', async (req, res) => {
-  try {
-    const products = getProducts();
-    const goldPrice = await getGoldPrice();
-    
-    const productsWithPrice = products.map(product => ({
-      ...product,
-      price: calculatePrice(product, goldPrice),
-      goldPrice: goldPrice
-    }));
-    
-    res.json({
-      success: true,
-      data: productsWithPrice,
-      count: productsWithPrice.length,
-      goldPrice: goldPrice
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: 'Ürünler alınamadı'
-    });
-  }
+    try {
+        const { minPrice, maxPrice, minPopularity, maxPopularity } = req.query;
+        
+        const products = getProducts();
+        
+        if (!products || products.length === 0) {
+            return res.status(404).json({
+                success: false,
+                error: 'Ürün bulunamadı'
+            });
+        }
+        
+        const goldPrice = await getGoldPrice();
+        
+        let productsWithPrice = products.map(product => ({
+            ...product,
+            price: calculatePrice(product, goldPrice)
+        }));
+
+        // Filtering logic
+        if (minPrice) {
+            productsWithPrice = productsWithPrice.filter(p => p.price >= parseFloat(minPrice));
+        }
+        if (maxPrice) {
+            productsWithPrice = productsWithPrice.filter(p => p.price <= parseFloat(maxPrice));
+        }
+        if (minPopularity) {
+            productsWithPrice = productsWithPrice.filter(p => p.popularityScore >= parseFloat(minPopularity));
+        }
+        if (maxPopularity) {
+            productsWithPrice = productsWithPrice.filter(p => p.popularityScore <= parseFloat(maxPopularity));
+        }
+        
+        res.json({
+            success: true,
+            data: productsWithPrice,
+            count: productsWithPrice.length,
+            goldPrice: goldPrice,
+            ...(minPrice || maxPrice || minPopularity || maxPopularity ? {
+                appliedFilters: { minPrice, maxPrice, minPopularity, maxPopularity }
+            } : {})
+        });
+    } catch (error) {
+        console.error('API Error:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Sunucu hatası oluştu'
+        });
+    }
 });
 
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server ${PORT} portunda çalışıyor`);
 });
