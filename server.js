@@ -12,7 +12,7 @@ app.use(express.json());
 
 const getProducts = () => {
     try{
-        const data = fs.readFileSync(path.join(__dirname, 'products.json'), 'utf8');
+        const data = fs.readFileSync(path.join(__dirname, 'data', 'products.json'), 'utf8');
         return JSON.parse(data);
     } catch (error) {
         console.error('JSON dosyası okunamadı:', error);
