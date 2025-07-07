@@ -89,7 +89,7 @@ code {
 
 .custom-arrow {
   position: absolute;
-  top: 125px; /* Align with the center of the image */
+  top: 100px; /* Adjust to center vertically with the larger image */
   transform: translateY(-50%);
   z-index: 10;
   cursor: pointer;
@@ -104,16 +104,20 @@ code {
 }
 
 .prev-arrow {
-  left: -60px; /* Move further out */
+  left: -40px; /* Move further out */
 }
 
 .next-arrow {
-  right: -60px; /* Move further out */
+  right: 40px; /* Move further out */
 }
 
 .slick-disabled {
   opacity: 0.3;
   cursor: default;
+}
+
+.slick-arrow::before {
+  display: none !important;
 }
 
 :root {
