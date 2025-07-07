@@ -95,7 +95,7 @@ const ProductCard = ({ product }) => {
               return (
                 <svg
                   key={i}
-                  className="w-4 h-4 text-yellow-400"
+                  className="w-4 h-4 text-[#F6D5A8]"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -110,7 +110,7 @@ const ProductCard = ({ product }) => {
                 <svg key={i} className="w-4 h-4" viewBox="0 0 20 20">
                   <defs>
                     <linearGradient id={starId}>
-                      <stop offset="50%" stopColor="#FBBF24" />
+                      <stop offset="50%" stopColor="#F6D5A8" />
                       <stop offset="50%" stopColor="#D1D5DB" />
                     </linearGradient>
                   </defs>
