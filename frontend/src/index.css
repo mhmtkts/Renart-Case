@@ -116,6 +116,38 @@ code {
   cursor: default;
 }
 
+.slider-thumb::-webkit-slider-runnable-track {
+  height: 8px;
+  background-color: #e5e7eb; /* light grey */
+  border-radius: 4px;
+}
+
+.slider-thumb::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -4px; /* (thumb height - track height) / 2 */
+  background-color: #9ca3af; /* darker grey */
+  height: 16px;
+  width: 80px; /* wider thumb */
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.slider-thumb::-moz-range-track {
+  height: 8px;
+  background-color: #e5e7eb;
+  border-radius: 4px;
+}
+
+.slider-thumb::-moz-range-thumb {
+  background-color: #9ca3af;
+  height: 16px;
+  width: 80px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+}
+
 .slick-arrow::before {
   display: none !important;
 }

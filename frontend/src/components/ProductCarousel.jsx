@@ -172,7 +172,7 @@ const ProductCarousel = () => {
           max="100"
           defaultValue="0"
           onChange={handleSliderChange}
-          className="w-1/2 h-1 bg-gray-300 rounded-lg appearance-none cursor-pointer slider-thumb"
+          className="w-full h-1 bg-gray-300 rounded-lg appearance-none cursor-pointer slider-thumb"
         />
       </div>
     </div>

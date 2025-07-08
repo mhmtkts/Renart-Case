@@ -45,11 +45,11 @@ const ProductCard = ({ product }) => {
 
   return (
     <div className="flex-shrink-0 w-[250px] bg-white text-left">
-      <div className="relative w-full h-[250px] bg-gray-100 rounded-lg mb-4">
+      <div className="relative w-full h-[250px] bg-gray-100 rounded-3xl mb-4 overflow-hidden">
         <img
           src={selectedImage}
           alt={`${name} - ${selectedColor}`}
-          className="w-full h-full object-cover rounded-lg"
+          className="w-full h-full object-cover"
         />
       </div>
 
