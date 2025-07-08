@@ -104,11 +104,31 @@ code {
 }
 
 .prev-arrow {
-  left: -40px; /* Move further out */
+  left: -24px; /* Default for mobile */
 }
 
 .next-arrow {
-  right: 40px; /* Move further out */
+  right: -24px; /* Default for mobile */
+}
+
+/* Medium screens (tablets) */
+@media (min-width: 768px) {
+  .prev-arrow {
+    left: -40px;
+  }
+  .next-arrow {
+    right: -40px;
+  }
+}
+
+/* Large screens (desktops) */
+@media (min-width: 1024px) {
+  .prev-arrow {
+    left: -40px;
+  }
+  .next-arrow {
+    right: -40px;
+  }
 }
 
 .slick-disabled {

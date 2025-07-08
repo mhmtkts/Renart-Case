@@ -156,7 +156,7 @@ const ProductCarousel = () => {
   }
 
   return (
-    <div className="container mx-auto px-20 py-8 relative">
+    <div className="container mx-auto px-4 sm:px-8 lg:px-20 py-8 relative">
       <Slider {...settings} ref={sliderRef}>
         {products.map((product) => (
           <div key={product.id} className="px-3">
