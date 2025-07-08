@@ -105,19 +105,19 @@ const ProductCarousel = () => {
     },
     responsive: [
       {
-        breakpoint: 1280,
+        breakpoint: 1280, // < 1280px
         settings: {
           slidesToShow: 3,
         },
       },
       {
-        breakpoint: 1024,
+        breakpoint: 1024, // < 1024px
         settings: {
           slidesToShow: 2,
         },
       },
       {
-        breakpoint: 768,
+        breakpoint: 767, // < 767px
         settings: {
           slidesToShow: 1,
         },
@@ -164,7 +164,7 @@ const ProductCarousel = () => {
           </div>
         ))}
       </Slider>
-      <div className="w-full flex justify-center mt-12">
+      <div className="w-full sm:w-10/12 lg:w-11/12 mt-4">
         <input
           ref={progressRef}
           type="range"
