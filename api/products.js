@@ -4,7 +4,7 @@ const https = require('https');
 
 const getProducts = () => {
     try {
-        const data = fs.readFileSync(path.join(process.cwd(), 'backend', 'data', 'products.json'), 'utf8');
+        const data = fs.readFileSync(path.join(__dirname, 'products.json'), 'utf8');
         return JSON.parse(data);
     } catch (error) {
         console.error('JSON dosyası okunamadı:', error);
