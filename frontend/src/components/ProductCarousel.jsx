@@ -65,10 +65,15 @@ const ProductCarousel = () => {
   const sliderRef = useRef(null);
   const progressRef = useRef(null);
 
+  const API_URL =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3000/api/products"
+    : "/api/products";
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://localhost:3000/");
+        const response = await fetch(API_URL);
         const data = await response.json();
         if (data.success) {
           setProducts(data.data);
@@ -81,7 +86,7 @@ const ProductCarousel = () => {
     };
 
     fetchProducts();
-  }, []);
+  });
 
   const getSlidesToShow = () => {
     const width = window.innerWidth;
