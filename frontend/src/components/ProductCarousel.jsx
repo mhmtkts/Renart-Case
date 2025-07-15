@@ -86,7 +86,7 @@ const ProductCarousel = () => {
     };
 
     fetchProducts();
-  }, []);
+  }, [API_URL]);
 
   const getSlidesToShow = () => {
     const width = window.innerWidth;
